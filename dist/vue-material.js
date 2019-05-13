@@ -262,7 +262,7 @@ var init = function init() {
     locale: {
       startYear: 1900,
       endYear: 2099,
-      dateFormat: 'YYYY-MM-DD',
+      dateFormat: 'yyyy-MM-dd',
       days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
       shortDays: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
       shorterDays: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
@@ -2316,8 +2316,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var componentTypes = ['md-app-toolbar', 'md-app-drawer', 'md-app-content'];
 
+function normilizeTagName(tagName) {
+  return tagName.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+}
+
 function isValidChild(componentOptions) {
-  return componentOptions && componentTypes.includes(componentOptions.tag);
+  return componentOptions && componentTypes.includes(normilizeTagName(componentOptions.tag));
 }
 
 function isRightDrawer(propsData) {
@@ -2348,7 +2352,7 @@ function buildSlots(children, context, functionalContext, options, createElement
       var componentOptions = child.componentOptions;
 
       if (shouldRenderSlot(data, componentOptions)) {
-        var slotName = data.slot || componentOptions.tag;
+        var slotName = data.slot || normilizeTagName(componentOptions.tag);
         child.data.slot = slotName;
 
         if (slotName === 'md-app-drawer') {
@@ -2385,7 +2389,7 @@ function buildSlots(children, context, functionalContext, options, createElement
 
 function getDrawers(children) {
   var drawerVnodes = children.filter(function (child) {
-    var tag = child.data.slot || child.componentOptions.tag;
+    var tag = child.data.slot || normilizeTagName(child.componentOptions.tag);
     return tag === 'md-app-drawer';
   });
   return drawerVnodes.length ? drawerVnodes : [];
@@ -3412,6 +3416,22 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 var _fuzzysearch = __webpack_require__(212);
 
@@ -3428,17 +3448,18 @@ var _MdPropValidator2 = _interopRequireDefault(_MdPropValidator);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
-  name: 'MdAutocomplete',
+  name: "MdAutocomplete",
   props: {
     value: {
       type: null,
       required: true
     },
+    mdValueKey: String,
     mdDense: Boolean,
     mdLayout: _extends({
       type: String,
-      default: 'floating'
-    }, (0, _MdPropValidator2.default)('md-layout', ['floating', 'box'])),
+      default: "floating"
+    }, (0, _MdPropValidator2.default)("md-layout", ["floating", "box"])),
     mdOpenOnFocus: {
       type: Boolean,
       default: true
@@ -3468,16 +3489,16 @@ exports.default = {
 
   computed: {
     isBoxLayout: function isBoxLayout() {
-      return this.mdLayout === 'box';
+      return this.mdLayout === "box";
     },
     fieldClasses: function fieldClasses() {
       if (this.isBoxLayout) {
-        return 'md-autocomplete-box';
+        return "md-autocomplete-box";
       }
     },
     contentClasses: function contentClasses() {
       if (this.isBoxLayout) {
-        return 'md-autocomplete-box-content';
+        return "md-autocomplete-box-content";
       }
     },
     shouldFilter: function shouldFilter() {
@@ -3491,9 +3512,9 @@ exports.default = {
       var firstItem = this.mdOptions[0];
 
       if (this.shouldFilter) {
-        if (typeof firstItem === 'string') {
+        if (typeof firstItem === "string") {
           return this.filterByString();
-        } else if ((typeof firstItem === 'undefined' ? 'undefined' : _typeof(firstItem)) === 'object') {
+        } else if ((typeof firstItem === "undefined" ? "undefined" : _typeof(firstItem)) === "object") {
           return this.filterByObject();
         }
       }
@@ -3504,7 +3525,7 @@ exports.default = {
       return this.filteredStaticOptions.length > 0 || this.filteredAsyncOptions.length > 0;
     },
     hasScopedEmptySlot: function hasScopedEmptySlot() {
-      return this.$scopedSlots['md-autocomplete-empty'];
+      return this.$scopedSlots["md-autocomplete-empty"];
     }
   },
   watch: {
@@ -3522,11 +3543,15 @@ exports.default = {
           });
         }
       }
-    },
-
-    value: function value(val) {
-      this.searchTerm = val;
     }
+
+    // value(val) {
+    //    if (this.mdValueKey && val[this.mdValueKey]) {
+    //     this.searchTerm = val[this.mdValueKey];
+    //   } else {
+    //     this.searchTerm = val;
+    //   }
+    // }
   },
   methods: {
     getOptions: function getOptions() {
@@ -3564,7 +3589,7 @@ exports.default = {
         var valuesCount = values.length;
 
         for (var i = 0; i <= valuesCount; i++) {
-          if (typeof values[i] === 'string' && _this3.matchText(values[i])) {
+          if (typeof values[i] === "string" && _this3.matchText(values[i])) {
             return true;
           }
         }
@@ -3576,14 +3601,14 @@ exports.default = {
       }
     },
     onInput: function onInput(value) {
-      this.$emit('input', value);
+      this.$emit("input", value);
 
-      if (!this.mdOpenOnFocus) {
+      if (!this.mdOpenOnFocus && value != this.searchTerm) {
         this.showOptions();
       }
-
-      if (this.searchTerm.constructor.toString().match(/function (\w*)/)[1].toLowerCase() !== 'inputevent') {
-        this.$emit('md-changed', this.searchTerm);
+      this.searchTerm = value;
+      if (this.searchTerm && this.searchTerm.constructor.toString().match(/function (\w*)/)[1].toLowerCase() !== "inputevent") {
+        this.$emit("md-changed", this.searchTerm);
       }
     },
     showOptions: function showOptions() {
@@ -3596,7 +3621,7 @@ exports.default = {
       this.showMenu = true;
       this.$nextTick(function () {
         _this4.triggerPopover = true;
-        _this4.$emit('md-opened');
+        _this4.$emit("md-opened");
       });
     },
     hideOptions: function hideOptions() {
@@ -3604,15 +3629,15 @@ exports.default = {
 
       this.$nextTick(function () {
         _this5.triggerPopover = false;
-        _this5.$emit('md-closed');
+        _this5.$emit("md-closed");
       });
     },
     selectItem: function selectItem(item, $event) {
       var content = $event.target.textContent.trim();
 
       this.searchTerm = content;
-      this.$emit('input', item);
-      this.$emit('md-selected', item);
+      this.$emit("input", item);
+      this.$emit("md-selected", item);
       this.hideOptions();
     }
   }
@@ -4029,7 +4054,7 @@ exports.default = new _MdComponent2.default({
   name: 'MdWave',
   data: function data() {
     return {
-      animating: true
+      animating: false
     };
   },
 
@@ -4037,9 +4062,12 @@ exports.default = new _MdComponent2.default({
     waveClasses: null,
     waveStyles: null
   },
+  mounted: function mounted() {
+    this.animating = true;
+  },
   methods: {
     end: function end() {
-      this.animating = null;
+      this.animating = false;
       this.$emit('md-end');
     }
   }
@@ -6281,7 +6309,7 @@ exports.default = {
       return this.mdOverrideNative ? 'text' : 'date';
     },
     dateFormat: function dateFormat() {
-      return this.locale.dateFormat || 'YYYY-MM-DD';
+      return this.locale.dateFormat || 'yyyy-MM-dd';
     },
     modelType: function modelType() {
       if (this.isModelTypeString) {
@@ -6317,12 +6345,12 @@ exports.default = {
       return parsedDate && (0, _isValid2.default)(parsedDate) ? parsedDate : null;
     },
     pattern: function pattern() {
-      return this.dateFormat.replace(/YYYY|MM|DD/g, function (match) {
+      return this.dateFormat.replace(/yyyy|MM|dd/g, function (match) {
         switch (match) {
-          case 'YYYY':
+          case 'yyyy':
             return '[0-9]{4}';
           case 'MM':
-          case 'DD':
+          case 'dd':
             return '[0-9]{2}';
         }
       });
@@ -6370,7 +6398,7 @@ exports.default = {
     },
     dateFormat: function dateFormat() {
       if (this.localDate) {
-        this.inputDate = (0, _format2.default)(this.inputDate, this.dateFormat);
+        this.inputDate = (0, _format2.default)(this.localDate, this.dateFormat);
       }
     }
   },
@@ -8499,7 +8527,7 @@ exports.default = {
     attrs: function attrs() {
       return _extends({}, this.$attrs, {
         name: this.name,
-        id: this.id
+        id: undefined
       });
     },
     inputListeners: function inputListeners() {
@@ -8675,9 +8703,9 @@ exports.default = {
       var isArray = Array.isArray(this.localValue);
 
       if (this.multiple && !isArray) {
-        this.localValue = this.setLocalValueIfMultiple();
+        this.setLocalValueIfMultiple();
       } else if (!this.multiple && isArray) {
-        this.localValue = this.setLocalValueIfNotMultiple();
+        this.setLocalValueIfNotMultiple();
       }
     },
     emitSelected: function emitSelected(value) {
@@ -9252,8 +9280,7 @@ exports.default = new _MdComponent2.default({
       if (document) {
         this.MdMenu.bodyClickObserver = new _MdObserveEvent2.default(document.body, 'click', function ($event) {
           $event.stopPropagation();
-
-          if (!_this3.isMenu($event) && (_this3.MdMenu.closeOnClick || _this3.isBackdropExpectMenu($event))) {
+          if (!_this3.isMenuContentEl($event) && (_this3.MdMenu.closeOnClick || _this3.isBackdropExpectMenu($event))) {
             _this3.MdMenu.active = false;
             _this3.MdMenu.bodyClickObserver.destroy();
             _this3.MdMenu.windowResizeObserver.destroy();
@@ -11016,8 +11043,14 @@ exports.default = new _MdComponent2.default({
     }
   },
   watch: {
+    mdValue: function mdValue() {
+      this.attachCircleStyle();
+    },
     mdDiameter: function mdDiameter() {
       this.attachSvgStyle();
+      this.attachCircleStyle();
+    },
+    mdStroke: function mdStroke() {
       this.attachCircleStyle();
     }
   },
@@ -12385,6 +12418,14 @@ exports.default = {
           var bAttr = getObjectAttribute(b, sortBy);
           var isAsc = _this.MdTable.sortOrder === 'asc';
           var isNumber = typeof aAttr === 'number';
+
+          if (!aAttr) {
+            return 1;
+          }
+
+          if (!bAttr) {
+            return -1;
+          }
 
           if (isNumber) {
             return isAsc ? aAttr - bAttr : bAttr - aAttr;
@@ -15945,6 +15986,7 @@ var render = function() {
             _vm._b(
               {
                 attrs: {
+                  value: _vm.searchTerm,
                   id: _vm.mdInputId,
                   name: _vm.mdInputName,
                   maxlength: _vm.mdInputMaxlength,
@@ -15956,19 +15998,14 @@ var render = function() {
                     return _vm.openOnFocus($event)
                   },
                   blur: _vm.hideOptions,
-                  input: _vm.onInput,
+                  input: function($event) {
+                    _vm.onInput($event)
+                  },
                   click: function($event) {
                     $event.stopPropagation()
                     $event.preventDefault()
                     return _vm.openOnFocus($event)
                   }
-                },
-                model: {
-                  value: _vm.searchTerm,
-                  callback: function($$v) {
-                    _vm.searchTerm = $$v
-                  },
-                  expression: "searchTerm"
                 }
               },
               "md-input",
@@ -16307,7 +16344,10 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "transition",
-    { attrs: { name: "md-ripple" }, on: { "after-enter": _vm.end } },
+    {
+      attrs: { name: "md-ripple", appear: "" },
+      on: { "after-enter": _vm.end }
+    },
     [_vm.animating ? _c("span") : _vm._e()]
   )
 }
@@ -18559,8 +18599,8 @@ var render = function() {
                 },
                 [
                   _vm.MdField.togglePassword
-                    ? _c("md-password-off-icon")
-                    : _c("md-password-on-icon")
+                    ? _c("md-password-on-icon")
+                    : _c("md-password-off-icon")
                 ],
                 1
               )
@@ -30989,7 +31029,8 @@ var render = function() {
                     name: _vm.name,
                     disabled: _vm.disabled,
                     required: _vm.required,
-                    value: _vm.value
+                    value: _vm.value,
+                    checked: _vm.isSelected
                   },
                   false
                 )
