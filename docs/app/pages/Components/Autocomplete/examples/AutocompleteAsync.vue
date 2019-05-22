@@ -4,7 +4,7 @@
       v-model="value"
       md-value-key="name"
       :md-options="countries"
-      :md-open-on-focus="false"
+      :md-open-on-focus="true"
       @md-changed="getCountries"
       @md-opened="getCountries"
     >

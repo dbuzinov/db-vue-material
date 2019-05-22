@@ -157,9 +157,9 @@ export default {
       }
     },
 
-    value(val) {
-      this.searchTerm = val;
-    }
+    // value(val) {
+    //   this.searchTerm = val;
+    // }
   },
   methods: {
     getOptions() {
@@ -205,7 +205,7 @@ export default {
     onInput(value) {
       this.$emit("input", value);
 
-      if (!this.mdOpenOnFocus && value != this.searchTerm) {
+      if (value != this.searchTerm) {
         this.showOptions();
       }
       this.searchTerm = value;

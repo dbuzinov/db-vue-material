@@ -3479,7 +3479,7 @@ exports.default = {
   },
   data: function data() {
     return {
-      searchTerm: this.value,
+      searchTerm: this.value ? this.value : '',
       showMenu: false,
       triggerPopover: false,
       isPromisePending: false,
@@ -3546,11 +3546,7 @@ exports.default = {
     }
 
     // value(val) {
-    //    if (this.mdValueKey && val[this.mdValueKey]) {
-    //     this.searchTerm = val[this.mdValueKey];
-    //   } else {
-    //     this.searchTerm = val;
-    //   }
+    //   this.searchTerm = val;
     // }
   },
   methods: {
@@ -3603,7 +3599,7 @@ exports.default = {
     onInput: function onInput(value) {
       this.$emit("input", value);
 
-      if (!this.mdOpenOnFocus && value != this.searchTerm) {
+      if (value != this.searchTerm) {
         this.showOptions();
       }
       this.searchTerm = value;
@@ -9280,6 +9276,7 @@ exports.default = new _MdComponent2.default({
       if (document) {
         this.MdMenu.bodyClickObserver = new _MdObserveEvent2.default(document.body, 'click', function ($event) {
           $event.stopPropagation();
+
           if (!_this3.isMenuContentEl($event) && (_this3.MdMenu.closeOnClick || _this3.isBackdropExpectMenu($event))) {
             _this3.MdMenu.active = false;
             _this3.MdMenu.bodyClickObserver.destroy();
@@ -15998,9 +15995,7 @@ var render = function() {
                     return _vm.openOnFocus($event)
                   },
                   blur: _vm.hideOptions,
-                  input: function($event) {
-                    _vm.onInput($event)
-                  },
+                  input: _vm.onInput,
                   click: function($event) {
                     $event.stopPropagation()
                     $event.preventDefault()
