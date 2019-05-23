@@ -2,7 +2,7 @@
   <md-field class="md-autocomplete" :class="fieldClasses" md-clearable :md-inline="isBoxLayout">
     <md-menu md-direction="bottom-start" :md-dense="mdDense" md-align-trigger md-full-width :md-active.sync="showMenu">
       <md-input
-        v-model="searchTerm"
+        :value="searchTerm"
         v-bind="$attrs"
         :id="mdInputId"
         :name="mdInputName"
@@ -188,9 +188,10 @@
       onInput (value) {
         this.$emit('input', value)
 
-        if (!this.mdOpenOnFocus) {
-          this.showOptions()
+        if (value != this.searchTerm) {
+          this.showOptions();
         }
+        this.searchTerm = value;
 
         if (this.searchTerm.constructor.toString().match(/function (\w*)/)[1].toLowerCase() !== 'inputevent') {
           this.$emit('md-changed', this.searchTerm)
