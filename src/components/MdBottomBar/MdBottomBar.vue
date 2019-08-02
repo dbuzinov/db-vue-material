@@ -51,6 +51,9 @@
       }
     },
     watch: {
+      MdActiveItem (newVal) {
+        this.MdBottomBar.activeItem = newVal
+      },
       activeItem () {
         this.$emit('md-changed', this.activeItem)
       },

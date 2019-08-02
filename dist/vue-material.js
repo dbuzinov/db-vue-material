@@ -3739,6 +3739,9 @@ exports.default = new _MdComponent2.default({
     }
   },
   watch: {
+    MdActiveItem: function MdActiveItem(newVal) {
+      this.MdBottomBar.activeItem = newVal;
+    },
     activeItem: function activeItem() {
       this.$emit('md-changed', this.activeItem);
     },
