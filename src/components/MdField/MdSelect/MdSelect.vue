@@ -7,6 +7,7 @@
     :md-offset-x="offset.x"
     :md-offset-y="offset.y"
     :md-dense="mdDense"
+    :md-full-width="true"
     @md-closed="onClose">
     <md-input
       class="md-input md-select-value"
@@ -33,6 +34,7 @@
         :md-content-class="mdClass"
         :style="menuStyles"
         @enter="onMenuEnter">
+        <md-menu-item class="md-select-label" v-if="mdLabel">{{mdLabel}}</md-menu-item>
         <slot v-if="showSelect" />
       </md-menu-content>
     </keep-alive>
@@ -56,7 +58,7 @@
   import MdFieldMixin from '../MdFieldMixin'
 
   const defaultOffset = {
-    x: -15,
+    x: 0,
     y: -48
   }
 
@@ -72,6 +74,7 @@
     props: {
       mdDense: Boolean,
       mdClass: String,
+      mdLabel: String,
       multiple: Boolean,
       id: String,
       name: String
