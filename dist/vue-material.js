@@ -15013,7 +15013,7 @@ var render = function() {
       _vm._t("md-app-drawer-right-previous"),
       _vm._v(" "),
       _c(
-        "main",
+        "div",
         {
           staticClass: "md-app-container md-flex md-layout-column",
           class: [_vm.$mdActiveTheme, _vm.scrollerClasses],
@@ -15145,7 +15145,7 @@ var render = function() {
       _vm._t("md-app-toolbar"),
       _vm._v(" "),
       _c(
-        "main",
+        "div",
         {
           staticClass: "md-app-container md-flex md-layout-row",
           class: [_vm.$mdActiveTheme, _vm.scrollerClasses],
