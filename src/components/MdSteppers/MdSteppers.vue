@@ -167,12 +167,13 @@
       },
       setupObservers () {
         const steppersContent = this.$el.querySelector('.md-steppers-wrapper')
-
+        
         if ('ResizeObserver' in window) {
           this.resizeObserver = new window.ResizeObserver(this.calculateStepperPos)
           this.resizeObserver.observe(this.$el)
         } else {
           window.addEventListener('resize', this.calculateStepperPos)
+          window.addEventListener('load', this.calculateStepperPos)
         }
 
         if (steppersContent) {
