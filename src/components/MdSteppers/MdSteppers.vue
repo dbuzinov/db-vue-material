@@ -187,10 +187,19 @@
       calculateStepperPos () {
         if (!this.mdVertical) {
           const stepperElement = this.$el.querySelector(`.md-stepper:nth-child(${this.activeStepIndex + 1})`)
-
-          this.contentStyles = {
-            height: `${stepperElement.offsetHeight}px`
+          if(stepperElement.offsetHeight == 0) {
+            setTimeout(() => {
+              this.contentStyles = {
+                height: `${stepperElement.offsetHeight}px`
+              }
+            }, 300)
           }
+          else {
+            this.contentStyles = {
+              height: `${stepperElement.offsetHeight}px`
+            }
+          }
+          
         }
       },
       onActiveStepIndex () {

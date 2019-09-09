@@ -11649,12 +11649,21 @@ exports.default = new _MdComponent2.default({
       }
     },
     calculateStepperPos: function calculateStepperPos() {
+      var _this = this;
+
       if (!this.mdVertical) {
         var stepperElement = this.$el.querySelector('.md-stepper:nth-child(' + (this.activeStepIndex + 1) + ')');
-
-        this.contentStyles = {
-          height: stepperElement.offsetHeight + 'px'
-        };
+        if (stepperElement.offsetHeight == 0) {
+          setTimeout(function () {
+            _this.contentStyles = {
+              height: stepperElement.offsetHeight + 'px'
+            };
+          }, 300);
+        } else {
+          this.contentStyles = {
+            height: stepperElement.offsetHeight + 'px'
+          };
+        }
       }
     },
     onActiveStepIndex: function onActiveStepIndex() {
@@ -11680,23 +11689,23 @@ exports.default = new _MdComponent2.default({
     this.MdSteppers.isVertical = this.mdVertical;
   },
   mounted: function mounted() {
-    var _this = this;
+    var _this2 = this;
 
     this.$nextTick().then(function () {
-      if (!_this.mdSyncRoute) {
-        _this.setActiveStepByIndex(0);
+      if (!_this2.mdSyncRoute) {
+        _this2.setActiveStepByIndex(0);
       } else {
-        _this.onActiveStepIndex();
+        _this2.onActiveStepIndex();
       }
 
-      return _this.$nextTick();
+      return _this2.$nextTick();
     }).then(function () {
-      _this.setActiveButtonEl();
-      _this.calculateStepperPos();
+      _this2.setActiveButtonEl();
+      _this2.calculateStepperPos();
 
       window.setTimeout(function () {
-        _this.noTransition = false;
-        _this.setupObservers();
+        _this2.noTransition = false;
+        _this2.setupObservers();
       }, 100);
     });
   },
