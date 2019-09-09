@@ -173,8 +173,8 @@
           this.resizeObserver.observe(this.$el)
         } else {
           window.addEventListener('resize', this.calculateStepperPos)
-          window.addEventListener('load', this.calculateStepperPos)
         }
+        window.addEventListener('load', this.calculateStepperPos)
 
         if (steppersContent) {
           this.resizeObserver = MdObserveElement(this.$el.querySelector('.md-steppers-wrapper'), {

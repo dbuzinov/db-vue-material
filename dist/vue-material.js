@@ -11631,13 +11631,14 @@ exports.default = new _MdComponent2.default({
     },
     setupObservers: function setupObservers() {
       var steppersContent = this.$el.querySelector('.md-steppers-wrapper');
+
       if ('ResizeObserver' in window) {
         this.resizeObserver = new window.ResizeObserver(this.calculateStepperPos);
         this.resizeObserver.observe(this.$el);
       } else {
         window.addEventListener('resize', this.calculateStepperPos);
-        window.addEventListener('load', this.calculateStepperPos);
       }
+      window.addEventListener('load', this.calculateStepperPos);
 
       if (steppersContent) {
         this.resizeObserver = (0, _MdObserveElement2.default)(this.$el.querySelector('.md-steppers-wrapper'), {
