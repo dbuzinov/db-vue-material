@@ -8953,6 +8953,9 @@ exports.default = {
       this.setOffsets();
       this.MdField.focused = true;
       this.$emit('md-opened');
+      // setTimeout(() => {
+      //   window.dispatchEvent(new Event('resize'))
+      // }, 50)
     },
     applyHighlight: function applyHighlight() {
       this.MdField.focused = false;
@@ -9686,8 +9689,12 @@ exports.default = new _MdComponent2.default({
       this.$watch('MdMenu.offsetY', this.setPopperSettings);
     },
     setStyles: function setStyles() {
+      var _this4 = this;
+
       if (this.MdMenu.fullWidth) {
-        this.menuStyles = '\n          width: ' + this.MdMenu.instance.$el.offsetWidth + 'px;\n          max-width: ' + this.MdMenu.instance.$el.offsetWidth + 'px\n        ';
+        setTimeout(function () {
+          _this4.menuStyles = '\n            width: ' + _this4.MdMenu.instance.$el.offsetWidth + 'px;\n            max-width: ' + _this4.MdMenu.instance.$el.offsetWidth + 'px\n          ';
+        }, 0);
       }
     },
     getBodyPosition: function getBodyPosition() {
@@ -9704,13 +9711,13 @@ exports.default = new _MdComponent2.default({
     }
   },
   mounted: function mounted() {
-    var _this4 = this;
+    var _this5 = this;
 
     this.$nextTick().then(function () {
-      _this4.setHighlightItems();
-      _this4.setupWatchers();
-      _this4.setStyles();
-      _this4.didMount = true;
+      _this5.setHighlightItems();
+      _this5.setupWatchers();
+      _this5.setStyles();
+      _this5.didMount = true;
     });
   },
   beforeDestroy: function beforeDestroy() {
