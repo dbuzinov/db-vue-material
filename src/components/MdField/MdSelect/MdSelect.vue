@@ -180,6 +180,9 @@
         this.setOffsets()
         this.MdField.focused = true
         this.$emit('md-opened')
+        setTimeout(() => {
+          window.dispatchEvent(new Event('resize'))
+        }, 50)
       },
       applyHighlight () {
         this.MdField.focused = false
