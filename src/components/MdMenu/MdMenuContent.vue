@@ -253,10 +253,12 @@
       },
       setStyles () {
         if (this.MdMenu.fullWidth) {
-          this.menuStyles = `
-            width: ${this.MdMenu.instance.$el.offsetWidth}px;
-            max-width: ${this.MdMenu.instance.$el.offsetWidth}px
-          `
+          setTimeout(() => {
+            this.menuStyles = `
+              width: ${this.MdMenu.instance.$el.offsetWidth}px;
+              max-width: ${this.MdMenu.instance.$el.offsetWidth}px
+            `
+          }, 0)
         }
       },
       getBodyPosition () {
