@@ -182,7 +182,7 @@
         this.$emit('md-opened')
         setTimeout(() => {
           window.dispatchEvent(new Event('resize'))
-        }, 50)
+        }, 100)
       },
       applyHighlight () {
         this.MdField.focused = false

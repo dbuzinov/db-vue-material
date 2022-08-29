@@ -8955,7 +8955,7 @@ exports.default = {
       this.$emit('md-opened');
       setTimeout(function () {
         window.dispatchEvent(new Event('resize'));
-      }, 50);
+      }, 100);
     },
     applyHighlight: function applyHighlight() {
       this.MdField.focused = false;
