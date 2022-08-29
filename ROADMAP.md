@@ -14,7 +14,7 @@ The release strategy will be like this:
 - Boilerplates, Nuxt template and further guides will be created
 
 ## Key Features
-- Automatic constrast ratio - YES! The theme factory will calculate the contrast between the background and text to give the correct black or white color.
+- Automatic contrast ratio - YES! The theme factory will calculate the contrast between the background and text to give the correct black or white color.
 - On demand themes! Create themes only for the components that you're really using
 - Pre made theme colors
 - Dynamic themes
@@ -51,7 +51,7 @@ The release strategy will be like this:
 - [X] MdBottomBar
   - [X] Router integration - `NEW`
   - [X] Router Sync - `NEW`
-  - [X] Symple way to trigger active item
+  - [X] Simple way to trigger active item
 - [X] MdButton
   - [X] Router integration - `NEW`
 - [x] MdCard
@@ -64,7 +64,7 @@ The release strategy will be like this:
   - [X] String
 - [X] MdChips
   - [X] Editable
-  - [X] Detelable
+  - [X] Deletable
 - [X] MdContent - `NEW`
 - [x] MdDatepicker - `NEW`
   - [x] Documentation
@@ -150,7 +150,7 @@ The release strategy will be like this:
   - [X] Documentation
   - [X] Router integration - `NEW`
   - [X] Router Sync - `NEW`
-  - [X] Symple way to trigger active tab
+  - [X] Simple way to trigger active tab
 - [X] MdToolbar - `NEW API`
 - [X] MdTooltip
 
@@ -230,10 +230,10 @@ Well. All kind of help are welcome. If you want to contribute with the project, 
 ## Awesome! I want to pay you a coffee!
 Vue Material do not run under the umbrella of any company or something like that, and is an independent project created by me on spare time. It became one of the most used UI Libraries for Vue.js.
 
-If you think that this project helped you or your company in some way, you can consider become a backer/sponsor on Patreon:
+If you think that this project helped you or your company in some way, you can consider become a backer/sponsor on Open Collective:
 <p>
-  <a href="https://www.patreon.com/marcosmoura" target="_blank">
-    <img width="150" src="https://c5.patreon.com/external/logo/become_a_patron_button.png">
+  <a href="https://opencollective.com/vue-material" target="_blank">
+    <img src="https://opencollective.com/vue-material/tiers/backer.svg?avatarHeight=36">
   </a>
 </p>
 

@@ -15,14 +15,14 @@
     </div>
 
     <div class="page-container-section">
-      <h2>Temporary</h2>
+      <h2 id="temporary">Temporary</h2>
 
       <p>Temporary navigation drawers are closed by default and opens temporarily above all other content until a section is selected. This is highly recommended for mobile devices. If you do not pass any options to drawer this will be the default preset:</p>
       <code-example title="Also works on the right side" :component="examples['temporary']" />
     </div>
 
     <div class="page-container-section">
-      <h2>Permanent</h2>
+      <h2 id="permanent">Permanent</h2>
 
       <p>Permanent navigation drawers are always visible and pinned to the left edge, at the same elevation as the content or background. They cannot be closed and are recommended default for desktop.</p>
       <p>They come with three sub-types: Full, Clipped and Card:</p>
@@ -40,7 +40,7 @@
     </div>
 
     <div class="page-container-section">
-      <h2>Persistent</h2>
+      <h2 id="persistent">Persistent</h2>
 
       <p>Persistent navigation drawers can toggle open or closed. The drawer sits on the same surface elevation as the content. It is closed by default and opens by selecting the menu icon, and stays open until closed by the user.</p>
       <p>They come with two sub-types: Full and Mini:</p>
@@ -156,21 +156,21 @@
             {
               name: 'md-persistent',
               type: 'String',
-              description: 'Sets if the drawer will be persistent on the screen, always pusing the content when opened.',
+              description: 'Sets if the drawer will be persistent on the screen, always pushing the content when opened.',
               defaults: 'null'
             },
             {
               offset: true,
               name: 'md-persistent="full"',
               type: 'String',
-              description: 'Make the drawer with full height. This will make the drawer hidden when closed and and pusing the content when opened.',
+              description: 'Make the drawer with full height. This will make the drawer hidden when closed and and pushing the content when opened.',
               defaults: '-'
             },
             {
               offset: true,
               name: 'md-persistent="mini"',
               type: 'String',
-              description: 'Make the drawer with full height. This will make the drawer hidden when closed and and pusing the content when opened.',
+              description: 'Make the drawer with full height. This will make the drawer hidden when closed and and pushing the content when opened.',
               defaults: '-'
             },
           ]

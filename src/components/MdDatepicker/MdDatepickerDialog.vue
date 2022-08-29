@@ -79,8 +79,8 @@
           </div>
 
           <md-dialog-actions class="md-datepicker-body-footer">
-            <md-button class="md-primary" @click="onCancel">Cancel</md-button>
-            <md-button v-if="!mdImmediately" class="md-primary" @click="onConfirm">Ok</md-button>
+            <md-button class="md-primary" @click="onCancel">{{ locale.cancel }}</md-button>
+            <md-button v-if="!mdImmediately" class="md-primary" @click="onConfirm">{{ locale.confirm }}</md-button>
           </md-dialog-actions>
         </div>
       </div>
@@ -133,6 +133,10 @@
       mdImmediately: {
         type: Boolean,
         default: false
+      },
+      mdPlacement: {
+        type: String,
+        default: 'bottom-start'
       }
     },
     data: () => ({
@@ -155,12 +159,12 @@
         firstDayOfAWeek += firstDayOfAWeek < 0 ? daysInAWeek : 0
         return firstDayOfAWeek
       },
-      locale() {
+      locale () {
         return this.$material.locale
       },
       popperSettings () {
         return {
-          placement: 'bottom-start',
+          placement: this.mdPlacement,
           modifiers: {
             keepTogether: {
               enabled: true

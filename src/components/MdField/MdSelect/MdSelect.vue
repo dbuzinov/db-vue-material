@@ -44,7 +44,7 @@
     </div>
 
     <input class="md-input-fake" v-model="model" :disabled="disabled" readonly tabindex="-1" />
-    <select readonly v-model="model" v-bind="attributes" tabindex="-1"></select>
+    <select readonly v-model="model" v-bind="attributes" tabindex="-1" ref="selectEl"></select>
   </md-menu>
 </template>
 
@@ -293,6 +293,9 @@
       },
       emitSelected (value) {
         this.$emit('md-selected', value)
+      },
+      isInvalidValue () {
+        return this.$refs.selectEl.validity ? this.$refs.selectEl.validity.badInput : false
       }
     },
     mounted () {

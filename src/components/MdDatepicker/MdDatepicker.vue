@@ -1,5 +1,5 @@
 <template>
-  <md-field :class="['md-datepicker', { 'md-native': !this.mdOverrideNative }]" md-clearable>
+  <md-field :class="['md-datepicker', { 'md-native': !mdOverrideNative }]" :md-clearable="mdClearable" @md-clear="onClear">
     <md-date-icon class="md-date-icon" @click.native="toggleDialog" />
     <md-input :type="type" ref="input" v-model="inputDate" @focus.native="onFocus" :pattern="pattern" />
 
@@ -12,6 +12,7 @@
         :md-disabled-dates="mdDisabledDates"
         :mdImmediately="mdImmediately"
         @md-closed="toggleDialog"
+        :md-placement="mdPlacement"
       />
     </keep-alive>
 
@@ -65,6 +66,14 @@
       MdDebounce: {
         type: Number,
         default: 1000
+      },
+      mdClearable: {
+        type: Boolean,
+        default: true
+      },
+      mdPlacement: {
+        type: String,
+        default: 'bottom-start'
       }
     },
     data: () => ({
@@ -153,7 +162,7 @@
       },
       value: {
         immediate: true,
-        handler() {
+        handler () {
           this.valueDateToLocalDate()
         }
       },
@@ -161,13 +170,13 @@
         switch (type) {
         case Date:
           this.$emit('input', this.localDate)
-          break;
+          break
         case String:
           this.$emit('input', this.localString)
-          break;
+          break
         case Number:
           this.$emit('input', this.localNumber)
-          break;
+          break
         }
       },
       dateFormat () {
@@ -221,6 +230,9 @@
         } else {
           Vue.util.warn(`The datepicker value is not a valid date. Given value: ${this.value}`)
         }
+      },
+      onClear () {
+        this.$emit('md-clear')
       }
     },
     created () {
