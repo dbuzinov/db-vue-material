@@ -5,7 +5,9 @@
     @touchmove.passive="event => mdEventTrigger && touchMoveCheck(event)"
     @mousedown.passive="event => mdEventTrigger && startRipple(event)">
     <slot />
-    <md-wave v-for="ripple in ripples" :key="ripple.uuid" :class="['md-ripple-wave', waveClasses]" :style="ripple.waveStyles" @md-end="clearWave(ripple.uuid)" v-if="!isDisabled" />
+    <div v-if="!isDisabled">
+      <md-wave v-for="ripple in ripples" :key="ripple.uuid" :class="['md-ripple-wave', waveClasses]" :style="ripple.waveStyles" @md-end="clearWave(ripple.uuid)" />
+    </div>
   </div>
 </template>
 
@@ -52,7 +54,7 @@
     watch: {
       mdActive (active) {
         const isBoolean = typeof active === 'boolean'
-        const isEvent = active.constructor.toString().match(/function (\w*)/)[1].toLowerCase() === 'mouseevent'
+        const isEvent = active instanceof MouseEvent
 
         if (isBoolean && this.mdCentered && active) {
           this.startRipple({

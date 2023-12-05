@@ -1,21 +1,23 @@
 <template>
-  <md-field :class="['md-datepicker', { 'md-native': !this.mdOverrideNative }]" md-clearable>
-    <md-date-icon class="md-date-icon" @click.native="toggleDialog" />
-    <md-input :type="type" ref="input" v-model="inputDate" @focus.native="onFocus" :pattern="pattern" />
+  <md-field :class="['md-datepicker', { 'md-native': !mdOverrideNative }]" :md-clearable="mdClearable" @md-clear="onClear">
+    <md-date-icon class="md-date-icon" @click.native="toggleDialog(true)" />
+    <md-input :type="type" ref="input" v-model="inputDate" @focus.native="onFocus" @focusout.native="onFocusOut" :pattern="pattern" />
 
     <slot />
 
     <keep-alive>
       <md-datepicker-dialog
         v-if="showDialog"
+        ref="mdRef"
         :md-date.sync="localDate"
         :md-disabled-dates="mdDisabledDates"
         :mdImmediately="mdImmediately"
-        @md-closed="toggleDialog"
+        @md-closed="toggleDialog(false)"
+        :md-placement="mdPlacement"
       />
     </keep-alive>
 
-    <md-overlay class="md-datepicker-overlay" md-fixed :md-active="showDialog" @click="toggleDialog" />
+    <md-overlay class="md-datepicker-overlay" md-fixed :md-active="showDialog" @click="toggleDialog(false)" />
   </md-field>
 </template>
 
@@ -49,6 +51,10 @@
         type: Boolean,
         default: true
       },
+      mdCloseOnBlur: {
+        type: Boolean,
+        default: true
+      },
       mdOverrideNative: {
         type: Boolean,
         default: true
@@ -65,6 +71,14 @@
       MdDebounce: {
         type: Number,
         default: 1000
+      },
+      mdClearable: {
+        type: Boolean,
+        default: true
+      },
+      mdPlacement: {
+        type: String,
+        default: 'bottom-start'
       }
     },
     data: () => ({
@@ -132,7 +146,7 @@
       }
     },
     watch: {
-      inputDate (value) {
+      inputDate () {
         this.inputDateToLocalDate()
       },
       localDate () {
@@ -153,7 +167,7 @@
       },
       value: {
         immediate: true,
-        handler() {
+        handler () {
           this.valueDateToLocalDate()
         }
       },
@@ -161,13 +175,13 @@
         switch (type) {
         case Date:
           this.$emit('input', this.localDate)
-          break;
+          break
         case String:
           this.$emit('input', this.localString)
-          break;
+          break
         case Number:
           this.$emit('input', this.localNumber)
-          break;
+          break
         }
       },
       dateFormat () {
@@ -177,9 +191,10 @@
       }
     },
     methods: {
-      toggleDialog () {
+      toggleDialog (newState = null) {
         if (!isFirefox || this.mdOverrideNative) {
-          this.showDialog = !this.showDialog
+          // If new state (boolean) is provide, assign that to showDialog, else just toggle
+          this.showDialog = newState === null ? !this.showDialog : newState
           if (this.showDialog) {
             this.$emit('md-opened')
           } else {
@@ -191,7 +206,12 @@
       },
       onFocus () {
         if (this.mdOpenOnFocus) {
-          this.toggleDialog()
+          this.toggleDialog(true)
+        }
+      },
+      onFocusOut (e) {
+        if (this.mdCloseOnBlur && this.$refs.mdRef.$el !== e.relatedTarget) {
+          this.toggleDialog(false)
         }
       },
       inputDateToLocalDate () {
@@ -221,6 +241,9 @@
         } else {
           Vue.util.warn(`The datepicker value is not a valid date. Given value: ${this.value}`)
         }
+      },
+      onClear () {
+        this.$emit('md-clear')
       }
     },
     created () {

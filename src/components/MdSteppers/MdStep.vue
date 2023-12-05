@@ -2,7 +2,7 @@
   <div class="md-stepper">
     <md-step-header v-if="MdSteppers.isVertical" :index="id" />
 
-    <div class="md-stepper-content" :class="{ 'md-active': !MdSteppers.syncRoute && id === MdSteppers.activeStep }">
+    <div :class="['md-stepper-content', { 'md-active': isActive }]" :tabindex="tabIndex" v-show="isActive">
       <slot />
     </div>
   </div>
@@ -41,6 +41,16 @@
         handler () {
           this.setStepperData()
         }
+      }
+    },
+    computed: {
+      isActive () {
+        return this.id === this.MdSteppers.activeStep
+      },
+      tabIndex () {
+        return !this.isActive
+          ? -1
+          : false
       }
     },
     methods: {
@@ -111,9 +121,7 @@
         on: this.$listeners
       }
 
-      if (this.href) {
-        this.buttonProps = this.$options.props
-      } else if (this.$router && this.to) {
+      if (this.$router && this.to) {
         this.$options.props = MdRouterLinkProps(this, this.$options.props)
 
         stepperAttrs.props = this.$props
